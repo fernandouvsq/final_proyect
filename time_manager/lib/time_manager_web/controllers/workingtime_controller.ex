@@ -24,7 +24,7 @@ defmodule TimeManagerWeb.WorkingtimeController do
     render(conn, "show.json", workingtime: workingtime)
   end
 
-  def show(conn, %{"id" => id}) do
+  def show(conn, %{"userID" => _userID, "id" => id}) do
     user = Management.get_user!(id)
     render(conn, "show.json", user: user)
   end
