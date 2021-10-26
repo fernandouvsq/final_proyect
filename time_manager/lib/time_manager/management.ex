@@ -217,6 +217,11 @@ defmodule TimeManager.Management do
     Repo.all(Workingtime)
   end
 
+  def list_workingtimes_schedule(userID, start, ennd) do
+    query = from(w in "wortkingtimes", where: w.userID == ^userID and w.start == ^start and w.ennd == ^ennd)
+    Repo.all(query)
+  end
+
   @doc """
   Gets a single workingtime.
 
