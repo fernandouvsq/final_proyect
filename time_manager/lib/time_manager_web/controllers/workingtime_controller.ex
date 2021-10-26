@@ -15,17 +15,16 @@ defmodule TimeManagerWeb.WorkingtimeController do
     with {:ok, %Workingtime{} = workingtime} <- Management.create_workingtime(workingtime_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", Routes.workingtime_path(conn, :show, workingtime))
       |> render("show.json", workingtime: workingtime)
     end
   end
 
-  def show(conn, %{"id" => id}) do
+  def show(conn, %{"userID" => id}) do
     workingtime = Management.get_workingtime!(id)
     render(conn, "show.json", workingtime: workingtime)
   end
 
-  def update(conn, %{"id" => id, "workingtime" => workingtime_params}) do
+  def update(conn, %{"userID" => id, "workingtime" => workingtime_params}) do
     workingtime = Management.get_workingtime!(id)
 
     with {:ok, %Workingtime{} = workingtime} <- Management.update_workingtime(workingtime, workingtime_params) do
@@ -33,7 +32,7 @@ defmodule TimeManagerWeb.WorkingtimeController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
+  def delete(conn, %{"userID" => id}) do
     workingtime = Management.get_workingtime!(id)
 
     with {:ok, %Workingtime{}} <- Management.delete_workingtime(workingtime) do

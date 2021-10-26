@@ -15,17 +15,21 @@ defmodule TimeManagerWeb.UserController do
     with {:ok, %User{} = user} <- Management.create_user(user_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", Routes.user_path(conn, :show, user))
       |> render("show.json", user: user)
     end
   end
 
-  def show(conn, %{"id" => id}) do
+  def show(conn, %{"userID" => id}) do
     user = Management.get_user!(id)
     render(conn, "show.json", user: user)
   end
 
-  def update(conn, %{"id" => id, "user" => user_params}) do
+  def show(conn, %{"email" => email, "username" => username}) do
+    user = Management.get_user_by!(email, username)
+    render(conn, "show.json", user: user)
+  end
+
+  def update(conn, %{"userID" => id, "user" => user_params}) do
     user = Management.get_user!(id)
 
     with {:ok, %User{} = user} <- Management.update_user(user, user_params) do
@@ -33,7 +37,7 @@ defmodule TimeManagerWeb.UserController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
+  def delete(conn, %{"userID" => id}) do
     user = Management.get_user!(id)
 
     with {:ok, %User{}} <- Management.delete_user(user) do

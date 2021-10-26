@@ -17,19 +17,36 @@ defmodule TimeManagerWeb.Router do
   scope "/", TimeManagerWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    get "/all", PageController, :index
   end
 
   # Other scopes may use custom stacks.
   scope "/api", TimeManagerWeb do
     pipe_through :api
 
-    resources "/users", UserController, except: [:new, :edit]
+    scope "/users" do
+      get "/", UserController, :show
+      get "/:userID", UserController, :show
+      post "/", UserController, :create
+      put "/:userID", UserController, :update
+      delete "/:userID", UserController, :delete
+    end
 
-    resources "/clocks", ClockController, only: [:show, :create]
+    scope "/workingtimes" do
+      get "/", WorkingtimeController, :show
+      get "/:id", WorkingtimeController, :show
+      post "/:userID", WorkingtimeController, :create
+      put "/:id", WorkingtimeController, :update
+      delete "/:id", WorkingtimeController, :delete
+    end
 
-    resources "/workingtimes", WorkingtimeController, except: [:new, :edit]
+    scope "/clocks" do
+      get "/userID", ClockController, :show
+      post "/:userID", ClockController, :create
+    end
   end
+
+
 
   # Enables LiveDashboard only for development
   #

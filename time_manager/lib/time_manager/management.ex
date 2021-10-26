@@ -37,6 +37,10 @@ defmodule TimeManager.Management do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
+
+  def get_user_by!(email, username), do: Repo.get_by!(User, [email: email, username: username])
+
+
   @doc """
   Creates a user.
 
