@@ -34,7 +34,7 @@ defmodule TimeManagerWeb.Router do
 
     scope "/workingtimes" do
       get "/", WorkingtimeController, :show
-      get "/:id", WorkingtimeController, :show
+      get "/:userID/:id", WorkingtimeController, :show
       post "/:userID", WorkingtimeController, :create
       put "/:id", WorkingtimeController, :update
       delete "/:id", WorkingtimeController, :delete
