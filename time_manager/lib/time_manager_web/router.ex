@@ -26,7 +26,7 @@ defmodule TimeManagerWeb.Router do
 
     resources "/users", UserController, except: [:new, :edit]
 
-    resources "/clocks", ClockController, only: [:new, :edit]
+    resources "/clocks", ClockController, only: [:show, :create]
 
     resources "/workingtimes", WorkingtimeController, except: [:new, :edit]
   end
