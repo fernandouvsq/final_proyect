@@ -5,7 +5,7 @@ defmodule TimeManager.Management.Workingtime do
   schema "workingtimes" do
     field :end, :utc_datetime
     field :start, :utc_datetime
-    field :user_id, :id
+    belongs_to :users, User
 
     timestamps()
   end
@@ -14,6 +14,6 @@ defmodule TimeManager.Management.Workingtime do
   def changeset(workingtime, attrs) do
     workingtime
     |> cast(attrs, [:start, :end])
-    |> validate_required([:start, :end])
+    |> validate_required([:start, :end, :user_id])
   end
 end

@@ -5,7 +5,7 @@ defmodule TimeManager.Management.Clock do
   schema "clocks" do
     field :status, :boolean, default: false
     field :time, :utc_datetime
-    field :user_id, :id
+    belongs_to :users, User
 
     timestamps()
   end
@@ -14,6 +14,6 @@ defmodule TimeManager.Management.Clock do
   def changeset(clock, attrs) do
     clock
     |> cast(attrs, [:time, :status])
-    |> validate_required([:time, :status])
+    |> validate_required([:time, :status, :user_id])
   end
 end
