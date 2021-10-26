@@ -5,7 +5,7 @@ defmodule TimeManager.Management.Clock do
   schema "clocks" do
     field :status, :boolean, default: false
     field :time, :utc_datetime
-    belongs_to :users, User
+    belongs_to :user, User
 
     timestamps()
   end

@@ -24,11 +24,11 @@ defmodule TimeManagerWeb.Router do
   scope "/api", TimeManagerWeb do
     pipe_through :api
 
-    resources "/users", UserController, except: [:edit]
+    resources "/users", UserController, except: [:new, :edit]
 
     resources "/clocks", ClockController, only: [:new, :edit]
 
-    resources "/workingtimes", WorkingtimeController, except: [:show, :create]
+    resources "/workingtimes", WorkingtimeController, except: [:new, :edit]
   end
 
   # Enables LiveDashboard only for development
