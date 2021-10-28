@@ -42,7 +42,7 @@ defmodule TimeManagerWeb.Router do
 
     scope "/clocks" do
       get "/:userID", ClockController, :show
-      post "/:userID", ClockController, :create
+      post "/", ClockController, :create
     end
   end
 
