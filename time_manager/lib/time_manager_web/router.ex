@@ -1,23 +1,16 @@
 defmodule TimeManagerWeb.Router do
   use TimeManagerWeb, :router
 
-  pipeline :browser do
-    plug :accepts, ["html"]
-    plug :fetch_session
-    plug :fetch_live_flash
-    plug :put_root_layout, {TimeManagerWeb.LayoutView, :root}
-    plug :protect_from_forgery
-    plug :put_secure_browser_headers
-  end
-
   pipeline :api do
     plug :accepts, ["json"]
+    plug(CORSPlug, origin: ["*"])
   end
 
   scope "/", TimeManagerWeb do
-    pipe_through :browser
+    pipe_through :api
 
-    get "/all", PageController, :index
+    get "/index", PageController, :index
+    get "/all", UserController, :index
   end
 
   # Other scopes may use custom stacks.
@@ -30,10 +23,13 @@ defmodule TimeManagerWeb.Router do
       post "/", UserController, :create
       put "/:userID", UserController, :update
       delete "/:userID", UserController, :delete
+      options "/", UserController, :options
+      options "/:userID", UserController, :options
     end
 
     scope "/workingtimes" do
       get "/", WorkingtimeController, :show
+      get "/:userID", WorkingtimeController, :show
       get "/:userID/:id", WorkingtimeController, :show
       post "/", WorkingtimeController, :create
       put "/:id", WorkingtimeController, :update
@@ -59,7 +55,7 @@ defmodule TimeManagerWeb.Router do
     import Phoenix.LiveDashboard.Router
 
     scope "/" do
-      pipe_through :browser
+      pipe_through :api
       live_dashboard "/dashboard", metrics: TimeManagerWeb.Telemetry
     end
   end
@@ -70,7 +66,7 @@ defmodule TimeManagerWeb.Router do
   # node running the Phoenix server.
   if Mix.env() == :dev do
     scope "/dev" do
-      pipe_through :browser
+      pipe_through :api
 
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end

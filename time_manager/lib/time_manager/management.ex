@@ -218,7 +218,7 @@ defmodule TimeManager.Management do
   end
 
   def list_workingtimes_schedule(userID, start, ennd) do
-    query = from(w in "wortkingtimes", where: w.userID == ^userID and w.start == ^start and w.ennd == ^ennd)
+    query = from(w in "wortkingtimes", where: w.userID == ^userID and w.start == ^start and w.ennd == ^ennd, select: w)
     Repo.all(query)
   end
 

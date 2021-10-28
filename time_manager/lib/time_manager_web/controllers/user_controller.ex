@@ -19,6 +19,10 @@ defmodule TimeManagerWeb.UserController do
     end
   end
 
+  def options(conn, _) do
+    send_resp(conn, 200, "Access-Control-Allow-Origin: *")
+  end
+
   def show(conn, %{"userID" => id}) do
     user = Management.get_user!(id)
     render(conn, "show.json", user: user)
