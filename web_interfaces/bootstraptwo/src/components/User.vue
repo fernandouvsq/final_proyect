@@ -20,7 +20,7 @@ export default {
     return {
       path: "http://localhost:4000/api/users",
       user: { email: "test@gmail.com", username: "test" },
-      userID: 1,
+      userID: 5,
     };
   },
   methods: {
@@ -35,44 +35,35 @@ export default {
         )
         .then((response) => {
           console.log(response.data);
-        })
+        });
     },
     createUser: function (User) {
       axios
         .post(this.path, {
-          data: {
             user: User
-          }
         })
         .then((response) => {
           console.log(response.data);
-        })
+        });
     },
     updateUser: function (UserID, Email, Username) {
       axios
         .put(this.path + "/" + UserID, {
-          headers: {
-            'Content-Type': 'application/json'
-        },
-          data: {
+          user: {
             email: Email,
-            username: Username
-          }
+            username: Username,
+          },
         })
         .then((response) => {
           console.log(response.data);
-        })
+        });
     },
     deleteUser: function (UserID) {
       axios
-        .delete(this.path + "/" + UserID, {
-          headers: {
-            "Content-Type": "application/json"
-        }
-        })
+        .delete(this.path + "/" + UserID)
         .then((response) => {
           console.log(response);
-        })
+        });
     },
   },
 };
