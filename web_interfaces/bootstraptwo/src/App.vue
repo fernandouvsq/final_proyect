@@ -2,16 +2,20 @@
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 //import CurrentWeather from './components/CurrentWeather.vue';
-import User from './components/User.vue';
+import User from "./components/User.vue";
 //import CharManager from './components/CharManager.vue';
 //import ClockManager from './components/ClockManager.vue';
-//import WorkingTime from './components/WorkingTime.vue';
+import WorkingTime from './components/WorkingTime.vue';
 //import WorkingTimes from './components/WorkingTimes.vue';
-
 </script>
 
 <template>
-  <User />
+  <div>
+    <User />
+  </div>
+  <div>
+    <WorkingTime />
+  </div>
 </template>
 
 <style>

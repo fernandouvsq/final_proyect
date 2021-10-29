@@ -39,4 +39,9 @@ defmodule TimeManagerWeb.ClockController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def options(conn, _) do
+    send_resp(conn, 200, "Access-Control-Allow-Origin: *")
+  end
+
 end

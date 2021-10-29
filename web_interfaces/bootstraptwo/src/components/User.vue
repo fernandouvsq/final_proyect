@@ -40,7 +40,7 @@ export default {
     createUser: function (User) {
       axios
         .post(this.path, {
-            user: User
+          user: User,
         })
         .then((response) => {
           console.log(response.data);
@@ -59,11 +59,9 @@ export default {
         });
     },
     deleteUser: function (UserID) {
-      axios
-        .delete(this.path + "/" + UserID)
-        .then((response) => {
-          console.log(response);
-        });
+      axios.delete(this.path + "/" + UserID).then((response) => {
+        console.log(response);
+      });
     },
   },
 };
