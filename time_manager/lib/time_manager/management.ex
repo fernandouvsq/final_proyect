@@ -137,6 +137,11 @@ defmodule TimeManager.Management do
   """
   def get_clock!(id), do: Repo.get!(Clock, id)
 
+  def get_clock_by_user(user_id) do
+    query = from c in Clock, where: c.user_id == ^user_id
+    Repo.all(query)
+  end
+
   @doc """
   Creates a clock.
 
@@ -217,8 +222,13 @@ defmodule TimeManager.Management do
     Repo.all(Workingtime)
   end
 
-  def list_workingtimes_schedule(userID, start, ennd) do
-    query = from(w in "wortkingtimes", where: w.userID == ^userID and w.start == ^start and w.ennd == ^ennd, select: w)
+  def list_workingtimes_by_user(user_id) do
+    query = from w in Workingtime, where: w.user_id == ^user_id
+    Repo.all(query)
+  end
+
+  def list_workingtimes_schedule(user_id, start, ennd) do
+    query = from w in Workingtime, where: w.user_id == ^user_id and w.start == ^start and w.end == ^ennd
     Repo.all(query)
   end
 

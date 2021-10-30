@@ -11,17 +11,18 @@ defmodule TimeManagerWeb.ClockController do
     render(conn, "index.json", clocks: clocks)
   end
 
-  def create(conn, %{"clock" => clock_params}) do
-    with {:ok, %Clock{} = clock} <- Management.create_clock(clock_params) do
+  def create(conn, %{"user_id" => user_id}) do
+    params = Map.merge(%{"user_id" => user_id}, conn.body_params["clock"])
+    with {:ok, %Clock{} = clock} <- Management.create_clock(params) do
       conn
       |> put_status(:created)
       |> render("show.json", clock: clock)
     end
   end
 
-  def show(conn, %{"userID" => id}) do
-    clock = Management.get_clock!(id)
-    render(conn, "show.json", clock: clock)
+  def show(conn, %{"user_id" => user_id}) do
+    clocks = Management.get_clock_by_user(user_id)
+    render(conn, "index.json", clocks: clocks)
   end
 
   def update(conn, %{"userID" => id, "clock" => clock_params}) do
@@ -43,5 +44,4 @@ defmodule TimeManagerWeb.ClockController do
   def options(conn, _) do
     send_resp(conn, 200, "Access-Control-Allow-Origin: *")
   end
-
 end
