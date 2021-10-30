@@ -3,15 +3,15 @@
 
 version : '3.8'
 services:
-    api:
+    time_manager:
         container_name: timemanager_api
-        image: api/timemanager_api
+        image: brysey/timemanager_api
         build:
             context: ./time_manager
         environment:
             PGUSER: postgres
-            PGPASSWORD: postgres
-            PGDATABASE: timemanager_dev
+            PGPASSWORD: "postgres"
+            PGDATABASE: api_dev
             PGPORT: 5432
             PGHOST: db
         ports:
@@ -20,17 +20,16 @@ services:
             - db
     db:
         container_name: time_manager-database-1
-        image: postgres:9.6
+        image: postgres:13-alpine
         environment:
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: postgres
             PGDATA: /var/lib/postgresql/data/pgdata
+        ports:
+            - 5432:5432
         restart: always
         volumes:
             - "/var/run/postgres/postgres.sock:/var/run/postgres/postgres.sock"
             - "dbdata:/var/lib/postgresql/data"
 volumes:
     dbdata:
-
-
-
