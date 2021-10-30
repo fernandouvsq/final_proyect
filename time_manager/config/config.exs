@@ -5,7 +5,7 @@
 # is restricted to this project.
 
 # General application configuration
-import Config
+use Mix.Config
 
 config :time_manager,
   ecto_repos: [TimeManager.Repo]
@@ -15,6 +15,7 @@ config :time_manager, TimeManagerWeb.Endpoint,
   url: [host: "localhost"],
   render_errors: [view: TimeManagerWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: TimeManager.PubSub,
+  secret_key_base: "XjWj50/pxMjAzK1Jh1xdIKXJoJeByvAWLW8A1sXQLVIJY5YuiDoEHlEL8Hp+aTWJ",
   live_view: [signing_salt: "osOnXWNi"]
 
 # Configures the mailer
@@ -49,4 +50,4 @@ config :phoenix, :json_library, Jason
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-import_config "#{config_env()}.exs"
+import_config "#{Mix.env()}.exs"
