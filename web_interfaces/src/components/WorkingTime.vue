@@ -1,9 +1,17 @@
 <template>
   <div>
+    <v-form>
+      <v-container>
+        <v-row>
+          <v-col cols="3" sm="6" md="3">
+            <input type="date" v-model="dateStart" placeholder="Date de début">
+            <input type="date" v-model="dateEnd" placeholder="Date de fin">
+            <v-btn v-on:click="createWorkingTime" color="accent" elevation="2">Créer</v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-form>
     <div class="create-workingTime">
-      <input type="date" v-model="dateStart" placeholder="Date de début">
-      <input type="date" v-model="dateEnd" placeholder="Date de fin">
-      <button v-on:click="createWorkingTime">Créer</button>
     </div>
     <button v-on:click="deleteWorkingTime(this.id)">Delete Working Time</button>
   </div>
