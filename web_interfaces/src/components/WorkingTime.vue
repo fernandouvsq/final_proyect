@@ -1,5 +1,10 @@
 <template>
   <div>
+    <div class="create-workingTime">
+      <input type="date" v-model="dateStart" placeholder="Date de début">
+      <input type="date" v-model="dateEnd" placeholder="Date de fin">
+      <button v-on:click="createWorkingTime">Créer</button>
+    </div>
     <button v-on:click="deleteWorkingTime(this.id)">Delete Working Time</button>
   </div>
 </template>
