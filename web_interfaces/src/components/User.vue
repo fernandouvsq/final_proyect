@@ -81,26 +81,18 @@ export default {
     },
     createUser () {
       axios
-        .post(this.path + '/' + {
-          data: {
-            user: User
+        .post(this.path, {
+          user: {
+            username: this.newUsername,
+            email: this.newEmail
           }
         })
         .then((response) => {
           console.log(response.data)
+          location.reload()
         })
+        .catch(err => console.log(err.message))
     },
-    // createUser (User) {
-    //   axios
-    //     .post(this.path, {
-    //       data: {
-    //         user: User
-    //       }
-    //     })
-    //     .then((response) => {
-    //       console.log(response.data)
-    //     })
-    // },
     updateUser (userId, Email, Username) {
       axios
         .put(this.path + '/' + userId, {
