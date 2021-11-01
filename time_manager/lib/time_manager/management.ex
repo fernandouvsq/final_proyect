@@ -227,6 +227,11 @@ defmodule TimeManager.Management do
     Repo.all(query)
   end
 
+  def list_workingtimes_by_user_and_id(user_id, id) do
+    query = from w in Workingtime, where: w.user_id == ^user_id and w.id == ^id
+    Repo.all(query)
+  end
+
   def list_workingtimes_schedule(user_id, start, ennd) do
     query = from w in Workingtime, where: w.user_id == ^user_id and w.start == ^start and w.end == ^ennd
     Repo.all(query)

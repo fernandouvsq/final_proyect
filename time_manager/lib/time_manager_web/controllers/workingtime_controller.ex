@@ -26,18 +26,13 @@ defmodule TimeManagerWeb.WorkingtimeController do
   end
 
   def show(conn, %{"user_id" => user_id, "id" => id}) do
-    workingtime = Management.get_workingtime!(id)
+    workingtime = Management.list_workingtimes_by_user_and_id(user_id, id)
     render(conn, "show.json", workingtime: workingtime)
   end
 
   def show(conn, %{"user_id" => user_id}) do
     workingtimes = Management.list_workingtimes_by_user(user_id)
     render(conn, "index.json", workingtimes: workingtimes)
-  end
-
-  def index(conn, _params) do
-    users = Management.list_users()
-    render(conn, "index.json", users: users)
   end
 
   def update(conn, %{"id" => id, "workingtime" => workingtime_params}) do
