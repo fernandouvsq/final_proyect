@@ -12,7 +12,11 @@
             <td>{{user.username}}</td>
             <td>{{user.email}}</td>
             <v-btn small v-on:click="getUser(user.id)">Show</v-btn>
+            <v-btn small>
+              <router-link :to="'/workingtimes/' + user.id">Workingtimes</router-link>
+            </v-btn>
 
+            <!-- MODAL EDIT USER -->
             <v-dialog v-model="editUserDialog" persistent max-width="600px">
               <template v-slot:activator="{ on, attrs }">
                 <v-btn small color="green" dark v-bind="attrs" v-on="on">Edit</v-btn>
@@ -46,6 +50,8 @@
           </tr>
       </tbody>
     </v-simple-table>
+
+    <!-- MODAL NEW USER -->
     <v-dialog v-model="createUserDialog" persistent max-width="600px">
       <template v-slot:activator="{ on, attrs }">
         <v-btn color="primary" dark v-bind="attrs" v-on="on">New user</v-btn>
@@ -75,6 +81,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
   </div>
 </template>
 

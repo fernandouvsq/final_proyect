@@ -17,9 +17,6 @@
           <router-link to="/users">User</router-link>
         </v-btn>
         <v-btn flat>
-          <router-link to="/workingtimes">Workingtimes</router-link>
-        </v-btn>
-        <v-btn flat>
           <router-link to="/workingtime">Workingtime</router-link>
         </v-btn>
         <v-btn flat>
