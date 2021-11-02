@@ -10,22 +10,22 @@
         Time Manager
       </v-toolbar-title>
       <v-toolbar-items>
-        <v-btn flat color="">
+        <v-btn color="">
           <router-link to="/">Home</router-link>
         </v-btn>
-        <v-btn flat>
+        <v-btn>
           <router-link to="/users">User</router-link>
         </v-btn>
-        <v-btn flat>
+        <v-btn >
           <router-link to="/workingtimes">Workingtimes</router-link>
         </v-btn>
-        <v-btn flat>
+        <v-btn >
           <router-link to="/workingtime">Workingtime</router-link>
         </v-btn>
-        <v-btn flat>
+        <v-btn >
           <router-link to="/clock">ClockManager</router-link>
         </v-btn>
-        <v-btn flat>
+        <v-btn >
           <router-link to="/chart">ChartManager</router-link>
         </v-btn>
       </v-toolbar-items>
