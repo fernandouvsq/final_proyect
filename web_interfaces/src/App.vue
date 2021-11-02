@@ -16,16 +16,13 @@
         <v-btn>
           <router-link to="/users">User</router-link>
         </v-btn>
-        <v-btn >
-          <router-link to="/workingtimes">Workingtimes</router-link>
-        </v-btn>
-        <v-btn >
+        <v-btn>
           <router-link to="/workingtime">Workingtime</router-link>
         </v-btn>
-        <v-btn >
+        <v-btn>
           <router-link to="/clock">ClockManager</router-link>
         </v-btn>
-        <v-btn >
+        <v-btn>
           <router-link to="/chart">ChartManager</router-link>
         </v-btn>
       </v-toolbar-items>

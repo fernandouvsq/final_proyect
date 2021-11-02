@@ -22,7 +22,7 @@ export default new VueRouter({
       component: User
     },
     {
-      path: '/workingtimes',
+      path: '/workingtimes/:user_id',
       name: 'Workingtimes',
       component: WorkingTimes
     },
