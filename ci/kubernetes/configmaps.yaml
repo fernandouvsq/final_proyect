@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres10-config
+  namespace: par10
+data: 
+  pg_host: database-service-10
+  pg_database: api_dev
+  pg_port: "5432"
+
+
