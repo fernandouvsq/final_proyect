@@ -11,24 +11,70 @@
           <tr v-for="user in users" :key="user.id">
             <td>{{user.username}}</td>
             <td>{{user.email}}</td>
-            <v-btn v-on:click="getUser(user.id)">Voir</v-btn>
-            <v-btn v-on:click="deleteUser(user.id)" color="error">Delete</v-btn>
+            <v-btn small v-on:click="getUser(user.id)">Show</v-btn>
+
+            <v-dialog v-model="editUserDialog" persistent max-width="600px">
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn small color="green" dark v-bind="attrs" v-on="on">Edit</v-btn>
+              </template>
+              <v-card>
+                <v-card-title justify="center">
+                  <span class="text-h5">Edit user</span>
+                </v-card-title>
+                <v-card-text>
+                  <v-container>
+                    <v-form>
+                      <v-container>
+                        <v-row justify="center" >
+                          <v-col cols="1" sm="5" md="5">
+                            <v-text-field v-model="newUsername" outlined required label="Username"></v-text-field>
+                            <v-text-field v-model="newEmail" outlined required label="Email"></v-text-field>
+                          </v-col>
+                        </v-row>
+                      </v-container>
+                    </v-form>
+                  </v-container>
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="blue darken-1" text v-on:click="editUserDialog = false">Close</v-btn>
+                  <v-btn color="green" dark v-on:click="updateUser(user.id)">Edit</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+            <v-btn small v-on:click="deleteUser(user.id)" color="error">Delete</v-btn>
           </tr>
       </tbody>
     </v-simple-table>
-    <v-form>
-      <v-container>
-        <v-row>
-          <v-col cols="3" sm="6" md="3">
-            <v-text-field v-model="newUsername" dense label="Username"></v-text-field>
-            <v-text-field v-model="newEmail" dense label="Email"></v-text-field>
-            <v-btn v-on:click="createUser()" color="accent" elevation="2">Create user</v-btn>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-form>
-    <button v-on:click="getUser()">getUser</button>
-    <button v-on:click="updateUser(this.userId, this.user.email, this.user.username)">updateUser</button>
+    <v-dialog v-model="createUserDialog" persistent max-width="600px">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn color="primary" dark v-bind="attrs" v-on="on">New user</v-btn>
+      </template>
+      <v-card>
+        <v-card-title justify="center">
+          <span class="text-h5">New user</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container>
+            <v-form>
+              <v-container>
+                <v-row justify="center" >
+                  <v-col cols="1" sm="5" md="5">
+                    <v-text-field v-model="newUsername" outlined required label="Username"></v-text-field>
+                    <v-text-field v-model="newEmail" outlined required label="Email"></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-form>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text v-on:click="createUserDialog = false">Close</v-btn>
+          <v-btn color="primary" v-on:click="createUser()">Save</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -40,6 +86,8 @@ export default {
   data () {
     return {
       users: [],
+      createUserDialog: false,
+      editUserDialog: false,
       path: 'http://localhost:4000/api/users',
       user: { email: 'test@gmail.com', username: 'test' },
       newUsername: '',
@@ -66,17 +114,11 @@ export default {
           console.log(response.data)
         })
     },
-    getUser () {
+    getUsersByEmailAndUsername () {
       axios
-        .get(
-          this.path +
-            '?email=' +
-            this.user.email +
-            '&username=' +
-            this.user.username
-        )
+        .get(this.path + '?email=' + this.user.email + '&username=' + this.user.username)
         .then((response) => {
-          console.log(response.data)
+          this.users = response.data.data
         })
     },
     createUser () {
@@ -93,19 +135,17 @@ export default {
         })
         .catch(err => console.log(err.message))
     },
-    updateUser (userId, Email, Username) {
+    updateUser (id) {
       axios
-        .put(this.path + '/' + userId, {
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          data: {
-            email: Email,
-            username: Username
+        .put(this.path + '/' + id, {
+          user: {
+            username: this.newUsername,
+            email: this.newEmail
           }
         })
         .then((response) => {
           console.log(response.data)
+          location.reload()
         })
     },
     deleteUser (id) {
