@@ -25,8 +25,8 @@ defmodule TimeManagerWeb.Router do
       delete "/:userID", UserController, :delete
       options "/", UserController, :options
       options "/:userID", UserController, :options
-      put "/:userID/rank_up", UserController, :rank_up
-      options "/:userID/rank_up", UserController, :options
+      put "/:userID/promote", UserController, :promote
+      options "/:userID/promote", UserController, :options
     end
 
     scope "/workingtimes" do

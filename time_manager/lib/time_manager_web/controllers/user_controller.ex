@@ -49,10 +49,10 @@ defmodule TimeManagerWeb.UserController do
     send_resp(conn, 200, "Access-Control-Allow-Origin: *")
   end
 
-  def rank_up(conn, %{"userID" => id, "user" => user_params}) do
+  def promote(conn, %{"userID" => id, "user" => user_params}) do
     user = Management.get_user!(id)
 
-    with {:ok, %User{} = user} <- Management.rank_up(user, user_params) do
+    with {:ok, %User{} = user} <- Management.promote(user, user_params) do
       render(conn, "show.json", user: user)
     end
   end

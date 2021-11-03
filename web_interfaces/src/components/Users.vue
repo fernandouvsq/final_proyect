@@ -51,7 +51,7 @@
                 </v-dialog>
 
                 <v-btn small v-on:click="deleteUser(user.id)" color="error">Delete</v-btn>
-                <v-btn v-if="user.role == 'employee'" v-on:click="rankUp(user.id)">Rank up</v-btn>
+                <v-btn small v-if="user.role == 'Employee'" v-on:click="promote(user.id)" class="ml-2" color="yellow">Promote</v-btn>
               </v-container>
             </tr>
         </tbody>
@@ -170,9 +170,9 @@ export default {
           location.reload()
         })
     },
-    rankUp (id){
+    promote (id){
       axios
-        .put(this.path + '/' + id + '/rank_up', {
+        .put(this.path + '/' + id + '/promote', {
           user: {
             role: 1
           }

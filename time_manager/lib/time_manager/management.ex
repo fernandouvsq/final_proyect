@@ -77,7 +77,7 @@ defmodule TimeManager.Management do
     |> Repo.update()
   end
 
-  def rank_up(%User{} = user, attrs) do
+  def promote(%User{} = user, attrs) do
     user
     |> User.changeset(attrs)
     |> Repo.update()
