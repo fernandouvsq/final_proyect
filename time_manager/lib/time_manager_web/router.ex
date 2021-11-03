@@ -34,14 +34,15 @@ defmodule TimeManagerWeb.Router do
       put "/:id", WorkingtimeController, :update
       delete "/:id", WorkingtimeController, :delete
       options "/", WorkingtimeController, :options
-      options "/:userID", WorkingtimeController, :options
-      options "/:userID/:id", WorkingtimeController, :options
+      options "/:user_id", WorkingtimeController, :options
+      options "/:user_id/:id", WorkingtimeController, :options
     end
 
     scope "/clocks" do
       get "/:user_id", ClockController, :show
       post "/:user_id", ClockController, :create
-      options "/:userID", ClockController, :options
+      put "/:user_id", ClockController, :update
+      options "/:user_id", ClockController, :options
     end
   end
 

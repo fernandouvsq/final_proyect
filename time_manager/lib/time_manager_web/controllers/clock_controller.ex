@@ -21,20 +21,21 @@ defmodule TimeManagerWeb.ClockController do
   end
 
   def show(conn, %{"user_id" => user_id}) do
-    clocks = Management.get_clock_by_user(user_id)
-    render(conn, "index.json", clocks: clocks)
+    clock = Management.get_clock_by_user(user_id)
+    render(conn, "show.json", clock: clock)
   end
 
-  def update(conn, %{"userID" => id, "clock" => clock_params}) do
-    clock = Management.get_clock!(id)
+  def update(conn, %{"user_id" => user_id, "clock" => clock_params}) do
+    clock = Management.get_clock_by_user(user_id)
 
+    IO.inspect clock_params
     with {:ok, %Clock{} = clock} <- Management.update_clock(clock, clock_params) do
       render(conn, "show.json", clock: clock)
     end
   end
 
-  def delete(conn, %{"userID" => id}) do
-    clock = Management.get_clock!(id)
+  def delete(conn, %{"user_id" => user_id}) do
+    clock = Management.get_clock_by_user(user_id)
 
     with {:ok, %Clock{}} <- Management.delete_clock(clock) do
       send_resp(conn, :no_content, "")
