@@ -6,12 +6,14 @@
             <tr>
               <th class="text-left">Username</th>
               <th class="text-left">Email</th>
+              <th class="text-left">Role</th>
             </tr>
           </thead>
           <tbody>
             <tr class="align-center" v-for="user in users" :key="user.id">
               <td>{{user.username}}</td>
               <td>{{user.email}}</td>
+              <td>{{user.role}}</td>
               <v-container class="align-center">
                 <v-btn small class="ml-2" v-on:click="getUser(user.id)">
                   <router-link class="link-router" :to="'/users/' + user.id">Show</router-link>
@@ -49,6 +51,7 @@
                 </v-dialog>
 
                 <v-btn small v-on:click="deleteUser(user.id)" color="error">Delete</v-btn>
+                <v-btn v-if="user.role == 'employee'" v-on:click="rankUp(user.id)">Rank up</v-btn>
               </v-container>
             </tr>
         </tbody>
@@ -164,6 +167,18 @@ export default {
         .delete(this.path + '/' + id)
         .then((response) => {
           console.log(response)
+          location.reload()
+        })
+    },
+    rankUp (id){
+      axios
+        .put(this.path + '/' + id + '/rank_up', {
+          user: {
+            role: 1
+          }
+        })
+        .then((response) => {
+          console.log(response.data)
           location.reload()
         })
     },

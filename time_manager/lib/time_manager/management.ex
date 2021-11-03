@@ -77,6 +77,12 @@ defmodule TimeManager.Management do
     |> Repo.update()
   end
 
+  def rank_up(%User{} = user, attrs) do
+    user
+    |> User.changeset(attrs)
+    |> Repo.update()
+  end
+
   @doc """
   Deletes a user.
 
