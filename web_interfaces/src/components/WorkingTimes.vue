@@ -1,12 +1,79 @@
 <template>
   <div>
     <v-container>
-      <h2 class="text-center">Workingtimes</h2>
-      <v-row justify="center">
-        <v-card :elevation="6" class="ma-4 pa-6" v-for="workingtime in workingtimes" :key="workingtime.id">
+      <h2 class="text-center mb-4">Workingtimes</h2>
+      <v-row justify="center" class="align-center">
+        <v-card :elevation="6" class="ma-4 pa-8" v-for="workingtime in workingtimes" :key="workingtime.id">
           <p>Start : {{format_date(workingtime.start)}}</p>
           <p>End : {{format_date(workingtime.end)}}</p>
+          <v-container justify="center" class="align-center">
+
+            <!-- UPDATE WORKINGTIME DIALOG -->
+            <v-dialog v-model="editWorkingTimeDialog" persistent max-width="600px">
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn small class="mx-2" color="green" dark v-bind="attrs" v-on="on">Edit</v-btn>
+              </template>
+              <v-card>
+                <v-card-title justify="center">
+                  <span class="text-h5">Edit Workingtime</span>
+                </v-card-title>
+                <v-card-text>
+                  <v-container>
+                    <v-form>
+                      <v-container>
+                        <v-row justify="center" >
+                          <v-col cols="1" sm="5" md="5">
+                            <input type="datetime-local" v-model="newDateStart" placeholder="Start">
+                            <input type="datetime-local" v-model="newDateEnd" placeholder="End">
+                          </v-col>
+                        </v-row>
+                      </v-container>
+                    </v-form>
+                  </v-container>
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="blue darken-1" text v-on:click="closeEditWorkingTimeDialog ()">Close</v-btn>
+                  <v-btn color="green" dark v-on:click="updateWorkingTime(workingtime.id)">Edit</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+
+            <v-btn small v-on:click="deleteWorkingTime(workingtime.id)" color="error">Delete</v-btn>
+          </v-container>
         </v-card>
+
+        <!-- MODAL NEW WORKINGTIME -->
+        <v-dialog v-model="createWorkingTimeDialog" persistent max-width="600px" class="mr-4">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn color="primary" dark v-bind="attrs" v-on="on">New Workingtime</v-btn>
+          </template>
+          <v-card>
+            <v-card-title justify="center">
+              <span class="text-h5">New Workingtime</span>
+            </v-card-title>
+            <v-card-text>
+              <v-container>
+                <v-form>
+                  <v-container>
+                    <v-row justify="center" >
+                      <v-col cols="1" sm="5" md="5">
+                        <input type="datetime-local" v-model="newDateStart" placeholder="Start">
+                        <input type="datetime-local" v-model="newDateEnd" placeholder="End">
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                </v-form>
+              </v-container>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text v-on:click="closeNewWorkingTimeDialog ()">Close</v-btn>
+              <v-btn color="primary" v-on:click="createWorkingTime($route.params.user_id)">Save</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
       </v-row>
     </v-container>
   </div>
@@ -23,8 +90,10 @@ export default {
       workingtimes: [],
       path: "http://localhost:4000/api/workingtimes",
       userId: 1,
-      startDate: '',
-      endDate: '',
+      newDateStart: '',
+      newDateEnd: '',
+      createWorkingTimeDialog: false,
+      editWorkingTimeDialog: false,
     };
   },
   mounted (){
@@ -33,24 +102,69 @@ export default {
   methods: {
     getWorkingTimes (user_id) {
       axios
-        .get(this.path + '/' + user_id)
+        .get(this.path + '/' + this.userId)
         .then((response) => {
           console.log(response.data.data)
           this.workingtimes = response.data.data
         })
         .catch(err => console.log(err.message))
     },
-    getWorkingTimesByDates (userId) {
+    getWorkingTimesByDates (user_id) {
       axios
       .get(this.path + '/' + userId + '?' + 'start=' + this.startDate + '&end=' + this.endDate)
       .then((response) => {
         console.log(response.data)
       })
     },
+    createWorkingTime (user_id) {
+      axios
+        .post(this.path + '/' + this.userId, {
+          workingtime: {
+            start: this.newDateStart,
+            end: this.newDateEnd
+          }
+        })
+        .then((response) => {
+          console.log(response.data)
+          location.reload()
+        })
+        .catch(err => console.log(err.message))
+    },
+    updateWorkingTime (id) {
+      axios
+        .put(this.path + "/" + id, {
+          workingtime: {
+            start: this.newDateStart,
+            end: this.newDateEnd
+          },
+        })
+        .then((response) => {
+          console.log(response.data)
+          location.reload()
+        })
+        .catch(err => console.log(err.message))
+    },
+    deleteWorkingTime (id) {
+      axios
+        .delete(this.path + "/" + id)
+        .then((response) => {
+          console.log(response);
+          location.reload()
+        })
+        .catch(err => console.log(err.message))
+    },
     format_date (value){
       if (value) {
-        return moment(String(value)).format('MM/DD/YYYY hh:mm')
+        return moment(String(value)).format('DD/MM/YYYY hh:mm')
       }
+    },
+    closeNewWorkingTimeDialog (){
+      this.newWorkingTimeDialog = false
+      location.reload()
+    },
+    closeEditWorkingTimeDialog (){
+      this.editWorkingTimeDialog = false
+      location.reload()
     },
   }
 }
