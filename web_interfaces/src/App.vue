@@ -14,10 +14,7 @@
           <router-link to="/">Home</router-link>
         </v-btn>
         <v-btn>
-          <router-link to="/users">User</router-link>
-        </v-btn>
-        <v-btn>
-          <router-link to="/workingtime">Workingtime</router-link>
+          <router-link to="/users">Users</router-link>
         </v-btn>
         <v-btn>
           <router-link to="/clock">ClockManager</router-link>

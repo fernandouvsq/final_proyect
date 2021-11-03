@@ -2,8 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@/components/HelloWorld'
 import WorkingTimes from '@/components/WorkingTimes'
-import WorkingTime from '@/components/WorkingTime'
 import User from '@/components/User'
+import Users from '@/components/Users'
 import ClockManager from '@/components/ClockManager'
 import ChartManager from '@/components/ChartManager'
 
@@ -18,6 +18,11 @@ export default new VueRouter({
     },
     {
       path: '/users',
+      name: 'Users',
+      component: Users
+    },
+    {
+      path: '/users/:id',
       name: 'User',
       component: User
     },
@@ -25,11 +30,6 @@ export default new VueRouter({
       path: '/workingtimes/:user_id',
       name: 'Workingtimes',
       component: WorkingTimes
-    },
-    {
-      path: '/workingtime',
-      name: 'Workingtime',
-      component: WorkingTime
     },
     {
       path: '/clock',
