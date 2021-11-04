@@ -23,7 +23,7 @@
 <script>
 import axios from "axios";
 import moment from "moment";
-import WorkingTime from "./WorkingTime.vue";
+import WorkingTimes from "./WorkingTimes.vue";
 
 //moment(this.clock.time, "“YYYY-MM-DD hh:mm:ss").fromNow();
 
@@ -43,7 +43,6 @@ export default {
         .get(this.path + "/" + UserID)
         .catch((error) => console.log(error));
       this.clock = response.data.data;
-      console.log(this.startDateTime);
     },
     createClock(UserID, startTime, Status) {
       axios
@@ -54,21 +53,18 @@ export default {
             user_id: UserID,
           },
         })
-        .then((response) => {
-          console.log(response.data);
-        })
+        .then((response) => {})
         .catch((err) => console.log(err.message));
     },
-    updateClock(UserID, Status) {
+    updateClock(UserID, startTime, Status) {
       axios
         .put(this.path + "/" + UserID, {
           clock: {
-            status: Status,
+            time: startTime,
+            status: Status
           },
         })
-        .then((response) => {
-          console.log(response.data);
-        })
+        .then((response) => {})
         .catch((err) => console.log(err.message));
     },
     async manageClock(UserID, startTime, Status) {
@@ -76,15 +72,18 @@ export default {
       if (this.clock == null) {
         this.createClock(UserID, startTime, Status);
       } else {
-        this.updateClock(UserID, !this.clock.status);
+        var clock_start_time = this.clock.time;
         if (!this.clock.status == false) {
-          this.WorkingTime.createWorkingTime(
-            UserID,
+          WorkingTimes.methods.createWorkingTime(
+            this.clock.user_id,
             this.clock.time,
-            this.getDate()
+            this.getDate(),
+            "http://localhost:4000/api/workingtimes"
           );
+        } else {
+          clock_start_time = this.getDate();
         }
-        //working time creation
+        this.updateClock(this.clock.user_id, clock_start_time, !this.clock.status);
       }
     },
     getDate() {
