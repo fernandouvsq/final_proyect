@@ -3,11 +3,11 @@ name: Kubernetes Deployment
 on:
   push:
     branches: 
-      - main
+      - master
       - feature/*
       - bryan
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
