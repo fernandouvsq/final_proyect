@@ -6,7 +6,7 @@ defmodule TimeManager.Management.User do
     field :email, :string
     field :username, :string
     field :password, :string
-    field :role, Ecto.Enum, values: [Employee: 0, Manager: 1, General_Manager: 2, Admin: 3]
+    field :role, Ecto.Enum, values: [Employee: 0, Manager: 1, General_Manager: 2]
 
     timestamps()
   end
