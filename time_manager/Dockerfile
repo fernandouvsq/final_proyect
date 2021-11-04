@@ -1,7 +1,7 @@
 # ./Dockerfile
 
 # Extend from the official Elixir image
-FROM elixir:latest
+FROM elixir:1.12.3
 
 
 RUN apt-get update && \ 
@@ -20,5 +20,7 @@ RUN mix local.hex --force
 RUN mix deps.get
 RUN mix local.rebar --force
 RUN mix do compile
+RUN chmod +x /time_manager/entrypoint.sh
+EXPOSE 4000
 
-CMD ["/time_manager/entrypoint.sh"]
+ENTRYPOINT ["/time_manager/entrypoint.sh"]

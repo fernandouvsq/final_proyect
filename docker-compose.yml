@@ -5,31 +5,40 @@ version : '3.8'
 services:
     time_manager:
         container_name: timemanager_api
-        image: brysey/timemanager_api
+        image: docker.io/brysey/timemanager_api:1.0.0
         build:
             context: ./time_manager
         environment:
-            PGUSER: postgres
-            PGPASSWORD: "postgres"
-            PGDATABASE: api_dev
-            PGPORT: 5432
-            PGHOST: db
+            PGUSER: ${PGUSER}
+            PGPASSWORD: ${PGPASSWORD}
+            PGDATABASE: ${PGDATABASE}
+            PGPORT: ${PGPORT}
+            PGHOST: ${PGHOST}
         ports:
             - "4000:4000"
         depends_on:
             - db
+        restart: on-failure
     db:
         container_name: time_manager-database-1
         image: postgres:13-alpine
-        environment:
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: postgres
+        environment:        
+            POSTGRES_USER: ${PGUSER}
+            POSTGRES_PASSWORD: ${PGPASSWORD}
             PGDATA: /var/lib/postgresql/data/pgdata
         ports:
-            - 5432:5432
+            - "5432:5432"
         restart: always
         volumes:
             - "/var/run/postgres/postgres.sock:/var/run/postgres/postgres.sock"
             - "dbdata:/var/lib/postgresql/data"
+    front: 
+        container_name: time_manager-front
+        image: docker.io/brysey/timemanager_api:2.0.0
+        restart: on-failure
+        build:
+            context: ./web_interfaces
+        ports: 
+            - "8080:8080"
 volumes:
     dbdata:
