@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '@/components/HelloWorld'
+import Dashboard from '@/components/Dashboard'
 import WorkingTimes from '@/components/WorkingTimes'
 import User from '@/components/User'
 import Users from '@/components/Users'
@@ -12,9 +12,9 @@ Vue.use(VueRouter)
 export default new VueRouter({
   routes: [
     {
-      path: '/',
-      name: 'Home',
-      component: Home
+      path: '/users/:id',
+      name: 'Dashboard',
+      component: Dashboard
     },
     {
       path: '/users',

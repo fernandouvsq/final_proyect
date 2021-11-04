@@ -11,10 +11,10 @@
       </v-toolbar-title>
       <v-toolbar-items>
         <v-btn color="">
-          <router-link to="/">Home</router-link>
+          <router-link to="/users/1">Dashboard</router-link>
         </v-btn>
         <v-btn>
-          <router-link to="/users">Users</router-link>
+          <router-link to="/users">Users</router-link> <!-- if current user is admin -->
         </v-btn>
         <v-btn>
           <router-link to="/clock">ClockManager</router-link>
