@@ -141,11 +141,9 @@ defmodule TimeManager.Management do
       ** (Ecto.NoResultsError)
 
   """
-  def get_clock!(id), do: Repo.get!(Clock, id)
-
   def get_clock_by_user(user_id) do
     query = from c in Clock, where: c.user_id == ^user_id
-    Repo.all(query)
+    Repo.one(query)
   end
 
   @doc """
@@ -182,6 +180,7 @@ defmodule TimeManager.Management do
     clock
     |> Clock.changeset(attrs)
     |> Repo.update()
+    # |> Repo.preload(:user)
   end
 
   @doc """
