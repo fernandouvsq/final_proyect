@@ -22,7 +22,7 @@
                 <!-- MODAL EDIT USER -->
                 <v-dialog v-model="editUserDialog" persistent max-width="600px">
                   <template v-slot:activator="{ on, attrs }">
-                    <v-btn class="mx-2" small color="green" dark v-bind="attrs" v-on:click="editUserDialog = true" v-on="on">Edit</v-btn>
+                    <v-btn class="mx-2" small color="green" dark v-bind="attrs" v-on="on">Edit</v-btn>
                   </template>
                   <v-card>
                     <v-card-title justify="center">
@@ -117,6 +117,7 @@ export default {
       axios
         .get(this.path + '/all')
         .then((response) => {
+          console.log(response.data.data)
           this.users = response.data.data
         })
         .catch(err => console.log(err.message))
