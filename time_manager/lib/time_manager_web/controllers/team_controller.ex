@@ -24,6 +24,11 @@ defmodule TimeManagerWeb.TeamController do
     render(conn, "show.json", team: team)
   end
 
+  def show(conn, %{"user_id" => user_id}) do
+    teams = Management.list_teams_by_user(user_id)
+    render(conn, "index.json", teams: teams)
+  end
+
   def update(conn, %{"id" => id, "team" => team_params}) do
     team = Management.get_team!(id)
 

@@ -338,6 +338,11 @@ defmodule TimeManager.Management do
     Repo.all(Team)
   end
 
+  def list_teams_by_user(user_id) do
+    query = from w in Team, where: w.user_id == ^user_id
+    Repo.all(query)
+  end
+
   @doc """
   Gets a single team.
 

@@ -7,6 +7,7 @@ defmodule TimeManager.Management.User do
     field :username, :string
     field :password, :string
     field :role, Ecto.Enum, values: [Employee: 0, Manager: 1, General_Manager: 2]
+    has_one :team, TimeManager.Management.Team
 
     timestamps()
   end
@@ -14,7 +15,7 @@ defmodule TimeManager.Management.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:username, :email, :password, :role])
+    |> cast(attrs, [:username, :email, :password, :role, :team_id])
     |> validate_required([:username, :email, :password, :role])
     |> validate_format(:email, ~r/@/)
   end

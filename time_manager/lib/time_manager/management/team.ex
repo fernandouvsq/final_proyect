@@ -11,7 +11,6 @@ defmodule TimeManager.Management.Team do
   @doc false
   def changeset(team, attrs) do
     team
-    |> cast(attrs, [:manager_id])
-    |> validate_required([:manager_id])
+    |> cast(attrs, [:user_id])
   end
 end

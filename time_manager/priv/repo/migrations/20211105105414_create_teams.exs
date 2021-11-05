@@ -2,12 +2,10 @@ defmodule TimeManager.Repo.Migrations.CreateTeams do
   use Ecto.Migration
 
   def change do
-    create table(:teams) do
-      add :manager_id, references(:users, on_delete: :delete_all), null: false
-
-      timestamps()
+    alter table(:teams) do
+      add :user_id, references(:users)
     end
 
-    create index(:teams, [:manager_id])
+    create index(:teams, [:user_id])
   end
 end
