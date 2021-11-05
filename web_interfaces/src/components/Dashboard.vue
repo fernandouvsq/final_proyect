@@ -1,13 +1,12 @@
 <template>
-  <div>
-    <v-container justify="center">
-      <h2>Utilisateur : {{this.user.username}}</h2>
+  <v-container class="mt-4">
+    <v-container class="text-center mb-8">
+      <h2>Bonjour {{this.user.username}},</h2>
+      <v-btn class="ma-4" color="green" dark elevation="2" x-large>Start</v-btn>
+      <v-btn class="ma-4" color="red" dark elevation="2" x-large>End</v-btn>
     </v-container>
-    <v-btn small>
-      <router-link :to="'/clock/' + this.user.id">Clock</router-link>
-    </v-btn>
     <workingtimes/>
-  </div>
+  </v-container>
 </template>
 
 <script>
