@@ -323,99 +323,99 @@ defmodule TimeManager.Management do
     Workingtime.changeset(workingtime, attrs)
   end
 
-  alias TimeManager.Management.Group
+  alias TimeManager.Management.Team
 
   @doc """
-  Returns the list of groups.
+  Returns the list of teams.
 
   ## Examples
 
-      iex> list_groups()
-      [%Group{}, ...]
+      iex> list_teams()
+      [%Team{}, ...]
 
   """
-  def list_groups do
-    Repo.all(Group)
+  def list_teams do
+    Repo.all(Team)
   end
 
   @doc """
-  Gets a single group.
+  Gets a single team.
 
-  Raises `Ecto.NoResultsError` if the Group does not exist.
+  Raises `Ecto.NoResultsError` if the Team does not exist.
 
   ## Examples
 
-      iex> get_group!(123)
-      %Group{}
+      iex> get_team!(123)
+      %Team{}
 
-      iex> get_group!(456)
+      iex> get_team!(456)
       ** (Ecto.NoResultsError)
 
   """
-  def get_group!(id), do: Repo.get!(Group, id)
+  def get_team!(id), do: Repo.get!(Team, id)
 
   @doc """
-  Creates a group.
+  Creates a team.
 
   ## Examples
 
-      iex> create_group(%{field: value})
-      {:ok, %Group{}}
+      iex> create_team(%{field: value})
+      {:ok, %Team{}}
 
-      iex> create_group(%{field: bad_value})
+      iex> create_team(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_group(attrs \\ %{}) do
-    %Group{}
-    |> Group.changeset(attrs)
+  def create_team(attrs \\ %{}) do
+    %Team{}
+    |> Team.changeset(attrs)
     |> Repo.insert()
   end
 
   @doc """
-  Updates a group.
+  Updates a team.
 
   ## Examples
 
-      iex> update_group(group, %{field: new_value})
-      {:ok, %Group{}}
+      iex> update_team(team, %{field: new_value})
+      {:ok, %Team{}}
 
-      iex> update_group(group, %{field: bad_value})
+      iex> update_team(group, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_group(%Group{} = group, attrs) do
-    group
-    |> Group.changeset(attrs)
+  def update_team(%Team{} = team, attrs) do
+    team
+    |> Team.changeset(attrs)
     |> Repo.update()
   end
 
   @doc """
-  Deletes a group.
+  Deletes a team.
 
   ## Examples
 
-      iex> delete_group(group)
-      {:ok, %Group{}}
+      iex> delete_team(team)
+      {:ok, %Team{}}
 
-      iex> delete_group(group)
+      iex> delete_team(team)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_group(%Group{} = group) do
-    Repo.delete(group)
+  def delete_team(%Team{} = team) do
+    Repo.delete(team)
   end
 
   @doc """
-  Returns an `%Ecto.Changeset{}` for tracking group changes.
+  Returns an `%Ecto.Changeset{}` for tracking team changes.
 
   ## Examples
 
-      iex> change_group(group)
-      %Ecto.Changeset{data: %Group{}}
+      iex> change_team(team)
+      %Ecto.Changeset{data: %Team{}}
 
   """
-  def change_group(%Group{} = group, attrs \\ %{}) do
-    Group.changeset(group, attrs)
+  def change_team(%Team{} = team, attrs \\ %{}) do
+    Team.changeset(team, attrs)
   end
 end
