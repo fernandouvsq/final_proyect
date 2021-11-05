@@ -48,4 +48,18 @@ defmodule TimeManager.ManagementFixtures do
 
     workingtime
   end
+
+  @doc """
+  Generate a group.
+  """
+  def group_fixture(attrs \\ %{}) do
+    {:ok, group} =
+      attrs
+      |> Enum.into(%{
+
+      })
+      |> TimeManager.Management.create_group()
+
+    group
+  end
 end

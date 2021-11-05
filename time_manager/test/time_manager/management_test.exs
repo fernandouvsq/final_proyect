@@ -170,4 +170,56 @@ defmodule TimeManager.ManagementTest do
       assert %Ecto.Changeset{} = Management.change_workingtime(workingtime)
     end
   end
+
+  describe "groups" do
+    alias TimeManager.Management.Group
+
+    import TimeManager.ManagementFixtures
+
+    @invalid_attrs %{}
+
+    test "list_groups/0 returns all groups" do
+      group = group_fixture()
+      assert Management.list_groups() == [group]
+    end
+
+    test "get_group!/1 returns the group with given id" do
+      group = group_fixture()
+      assert Management.get_group!(group.id) == group
+    end
+
+    test "create_group/1 with valid data creates a group" do
+      valid_attrs = %{}
+
+      assert {:ok, %Group{} = group} = Management.create_group(valid_attrs)
+    end
+
+    test "create_group/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Management.create_group(@invalid_attrs)
+    end
+
+    test "update_group/2 with valid data updates the group" do
+      group = group_fixture()
+      update_attrs = %{}
+
+      assert {:ok, %Group{} = group} = Management.update_group(group, update_attrs)
+    end
+
+    test "update_group/2 with invalid data returns error changeset" do
+      group = group_fixture()
+      assert {:error, %Ecto.Changeset{}} = Management.update_group(group, @invalid_attrs)
+      assert group == Management.get_group!(group.id)
+    end
+
+    test "delete_group/1 deletes the group" do
+      group = group_fixture()
+      assert {:ok, %Group{}} = Management.delete_group(group)
+      assert_raise Ecto.NoResultsError, fn -> Management.get_group!(group.id) end
+    end
+
+    test "change_group/1 returns a group changeset" do
+      group = group_fixture()
+      assert %Ecto.Changeset{} = Management.change_group(group)
+    end
+  end
 end
