@@ -112,10 +112,11 @@ export default {
   name: 'App',
   data: () => ({
     path: 'http://localhost:4000/api/users',
+    userId: 1,
     user: []
   }),
   mounted (){
-    this.getUser(this.$route.params.id)
+    this.getUser(this.userId) // TO DO : current_user_id
   },
   methods: {
     getUser (id){
