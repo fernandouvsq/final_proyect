@@ -5,21 +5,26 @@
         Time manager
       </v-toolbar-title>
       <v-toolbar-items class="d-flex justify-space-around align-center">
-        <router-link class="white--text mr-6" to="/users/1">
+        <router-link class="white--text text-decoration-none mr-6" to="/users/1">
           <v-btn>Dashboard</v-btn>
         </router-link>
-        <router-link class="white--text mr-6" to="/users">
+        <router-link class="white--text text-decoration-none mr-6" to="/users">
           <v-btn>Users</v-btn>
         </router-link> <!-- if current user is admin -->
-        <router-link class="white--text" to="/manage">
+        <router-link class="white--text text-decoration-none" to="/manage">
           <v-btn>Manage</v-btn>
         </router-link>
       </v-toolbar-items>
+
       <v-spacer></v-spacer>
 
+      <!-- DIALOG FOR ACCOUNT INFORMATIONS -->
       <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-x>
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="green" dark v-bind="attrs" v-on="on">Account</v-btn>
+        <v-btn color="green" dark v-bind="attrs" v-on="on">
+        <span>Account</span>
+        <v-icon small class="ml-2">fas fa-angle-down</v-icon>
+        </v-btn>
       </template>
       <v-card>
         <v-list>
