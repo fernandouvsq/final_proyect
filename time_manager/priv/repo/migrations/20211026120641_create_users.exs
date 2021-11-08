@@ -10,7 +10,7 @@ defmodule TimeManager.Repo.Migrations.CreateUsers do
     create table(:users) do
       add :username, :string, null: false
       add :email, :string, null: false
-      add :password, :string
+      add :password_hash, :string, null: :false
       add :role, :integer, default: 0, null: false
       add :team_id, references(:teams)
 

@@ -1,12 +1,15 @@
 defmodule TimeManager.Management.User do
   use Ecto.Schema
   import Ecto.Changeset
+  import Bcrypt
 
   schema "users" do
     field :email, :string
     field :username, :string
-    field :password, :string
+    field :password_hash, :string
     field :role, Ecto.Enum, values: [Employee: 0, Manager: 1, General_Manager: 2]
+    field :password, :string, virtual: true
+    field :password_confirmation, :string, virtual: true
     has_one :team, TimeManager.Management.Team
 
     timestamps()
@@ -15,8 +18,22 @@ defmodule TimeManager.Management.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:username, :email, :password, :role])
-    |> validate_required([:username, :email])
+    |> cast(attrs, [:username, :email, :role, :password, :password_confirmation])
+    |> validate_required([:username, :email, :role, :password, :password_confirmation])
     |> validate_format(:email, ~r/@/)
+    |> validate_length(:password, min: 8)
+    |> validate_confirmation(:password)
+    |> unique_constraint(:email)
+    |> put_password_hash
+  end
+
+  defp put_password_hash(changeset) do
+    case changeset do
+      %Ecto.Changeset{valid?: true, changes: %{password: pass}}
+        ->
+          put_change(changeset, :password_hash, hash_pwd_salt(pass))
+      _ ->
+          changeset
+    end
   end
 end

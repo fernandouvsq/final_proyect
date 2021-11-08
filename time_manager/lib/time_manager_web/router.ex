@@ -1,9 +1,15 @@
 defmodule TimeManagerWeb.Router do
   use TimeManagerWeb, :router
 
+  alias TimeManagerWeb.Guardian
+
   pipeline :api do
     plug :accepts, ["json"]
     plug(CORSPlug, origin: ["*"])
+  end
+
+  pipeline :jwt_authenticated do
+    plug Guardian.AuthPipeline
   end
 
   scope "/", TimeManagerWeb do
@@ -12,15 +18,21 @@ defmodule TimeManagerWeb.Router do
     get "/index", PageController, :index
   end
 
+  scope "/api", TimeManagerWeb do
+    pipe_through [:api, :jwt_authenticated]
+
+    get "/users", UserController, :show
+  end
+
   # Other scopes may use custom stacks.
   scope "/api", TimeManagerWeb do
     pipe_through :api
 
     scope "/users" do
       get "/all", UserController, :index
-      get "/", UserController, :show
       get "/:userID", UserController, :show
-      post "/", UserController, :create
+      post "/sign_up", UserController, :create
+      post "/sign_in", UserController, :sign_in
       put "/:userID", UserController, :update
       delete "/:userID", UserController, :delete
       options "/", UserController, :options

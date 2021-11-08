@@ -3,6 +3,7 @@ defmodule TimeManagerWeb.UserController do
 
   alias TimeManager.Management
   alias TimeManager.Management.User
+  alias TimeManagerWeb.Guardian
 
   action_fallback TimeManagerWeb.FallbackController
 
@@ -10,6 +11,21 @@ defmodule TimeManagerWeb.UserController do
     users = Management.list_users()
     render(conn, "index.json", users: users)
   end
+
+  def show(conn, %{"email" => email, "username" => username}) do
+    user = Management.get_user_by!(email, username)
+    render(conn, "show.json", user: user)
+  end
+
+  def show(conn, %{"userID" => id}) do
+    user = Management.get_user!(id)
+    render(conn, "show.json", user: user)
+  end
+
+  def show(conn, _) do
+    user = Guardian.Plug.current_resource(conn)
+    conn |> render("user.json", user: user)
+ end
 
   def create(conn, %{"user" => user_params}) do
     with {:ok, %User{} = user} <- Management.create_user(user_params) do
@@ -19,14 +35,13 @@ defmodule TimeManagerWeb.UserController do
     end
   end
 
-  def show(conn, %{"userID" => id}) do
-    user = Management.get_user!(id)
-    render(conn, "show.json", user: user)
-  end
-
-  def show(conn, %{"email" => email, "username" => username}) do
-    user = Management.get_user_by!(email, username)
-    render(conn, "show.json", user: user)
+  def sign_in(conn, %{"email" => email, "password" => password}) do
+    case Management.token_sign_in(email, password) do
+      {:ok, token, _claims} ->
+        conn |> render("jwt.json", jwt: token)
+      _ ->
+        {:error, :unauthorized}
+    end
   end
 
   def update(conn, %{"userID" => id, "user" => user_params}) do
