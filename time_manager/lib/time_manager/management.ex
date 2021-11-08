@@ -5,7 +5,6 @@ defmodule TimeManager.Management do
 
   import Ecto.Query, warn: false
   import Bcrypt
-  import Guardian
   import Comeonin.Bcrypt, only: [dummy_checkpw: 0]
 
   alias TimeManager.Repo
