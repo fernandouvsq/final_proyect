@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '@/components/HelloWorld'
+import Dashboard from '@/components/Dashboard'
 import WorkingTimes from '@/components/WorkingTimes'
-import User from '@/components/User'
 import Users from '@/components/Users'
+import Manage from '@/components/Manage'
 import ClockManager from '@/components/ClockManager'
 import ChartManager from '@/components/ChartManager'
 
@@ -12,9 +12,9 @@ Vue.use(VueRouter)
 export default new VueRouter({
   routes: [
     {
-      path: '/',
-      name: 'Home',
-      component: Home
+      path: '/users/:id',
+      name: 'Dashboard',
+      component: Dashboard
     },
     {
       path: '/users',
@@ -22,14 +22,14 @@ export default new VueRouter({
       component: Users
     },
     {
-      path: '/users/:id',
-      name: 'User',
-      component: User
-    },
-    {
       path: '/workingtimes/:user_id',
       name: 'Workingtimes',
       component: WorkingTimes
+    },
+    {
+      path: '/manage',
+      name: 'Manage',
+      component: Manage
     },
     {
       path: '/clock',

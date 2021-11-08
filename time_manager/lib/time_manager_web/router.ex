@@ -58,6 +58,16 @@ defmodule TimeManagerWeb.Router do
       put "/:user_id", ClockController, :update
       options "/:user_id", ClockController, :options
     end
+
+    scope "/teams" do
+      get "/all", TeamController, :index
+      get "/:user_id", TeamController, :show
+      post "/", TeamController, :create
+      put "/:user_id", TeamController, :update
+      delete "/:user_id", TeamController, :delete
+      options "/", TeamController, :options
+      options "/:user_id", TeamController, :options
+    end
   end
 
 

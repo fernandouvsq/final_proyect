@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database-deployment-10
+  namespace: par10
+  labels:
+    app: database-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: database-deployment
+  template:
+    metadata:
+      labels:
+        app: database-deployment
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: database-deployment
+        image: postgres:13-alpine
+        env: 
+          - name: POSTGRES_USER
+            valueFrom: 
+              secretKeyRef:
+                name: database10-secret
+                key: pg_user
+          - name: POSTGRES_PASSWORD
+            valueFrom: 
+              secretKeyRef:
+                name: database10-secret
+                key: pg_password
+        ports:
+        - containerPort: 5432
+        imagePullPolicy: Always
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: database-service-10
+  namespace: par10
+spec:
+  type: ClusterIP
+  selector:
+    app: database-deployment
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432

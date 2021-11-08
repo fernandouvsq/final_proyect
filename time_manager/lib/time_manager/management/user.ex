@@ -7,9 +7,10 @@ defmodule TimeManager.Management.User do
     field :email, :string
     field :username, :string
     field :password_hash, :string
-    field :role, Ecto.Enum, values: [Employee: 0, Manager: 1, General_Manager: 2, Admin: 3]
+    field :role, Ecto.Enum, values: [Employee: 0, Manager: 1, General_Manager: 2]
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true
+    has_one :team, TimeManager.Management.Team
 
     timestamps()
   end
@@ -17,13 +18,13 @@ defmodule TimeManager.Management.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:username, :email, :role, :password, :password_confirmation]) # Remove hash, add pw + pw confirmation
-    |> validate_required([:username, :email, :role, :password, :password_confirmation]) # Remove hash, add pw + pw confirmation
-    |> validate_format(:email, ~r/@/) # Check that email is valid
-    |> validate_length(:password, min: 8) # Check that password length is >= 8
-    |> validate_confirmation(:password) # Check that password === password_confirmation
+    |> cast(attrs, [:username, :email, :role, :password, :password_confirmation])
+    |> validate_required([:username, :email, :role, :password, :password_confirmation])
+    |> validate_format(:email, ~r/@/)
+    |> validate_length(:password, min: 8)
+    |> validate_confirmation(:password)
     |> unique_constraint(:email)
-    |> put_password_hash # Add put_password_hash to changeset pipeline
+    |> put_password_hash
   end
 
   defp put_password_hash(changeset) do

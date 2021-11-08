@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment-10
+  namespace: par10
+  labels:
+    app: frontend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend-deployment
+  template:
+    metadata:
+      labels:
+        app: frontend-deployment
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: frontend-deployment
+        image: docker.io/brysey/timemanager_api:2.0.0
+        ports:
+        - containerPort: 8080
+        imagePullPolicy: Always
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service-10
+  namespace: par10
+spec:
+  type: LoadBalancer
+  selector:
+    app: frontend-deployment
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

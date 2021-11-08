@@ -1,3 +1,5 @@
+<!-- FOR ADMIN -->
+
 <template>
   <div>
     <v-row justify="center" class="mt-4">
@@ -22,7 +24,10 @@
                 <!-- MODAL EDIT USER -->
                 <v-dialog v-model="editUserDialog" persistent max-width="600px">
                   <template v-slot:activator="{ on, attrs }">
-                    <v-btn class="mx-2" small color="green" dark v-bind="attrs" v-on:click="editUserDialog = true" v-on="on">Edit</v-btn>
+                    <v-btn class="mx-2" small color="green" dark v-bind="attrs" v-on="on">
+                      <v-icon small class="mr-2">fas fa-edit</v-icon>
+                      <span>Edit</span>
+                    </v-btn>
                   </template>
                   <v-card>
                     <v-card-title justify="center">
@@ -50,7 +55,26 @@
                   </v-card>
                 </v-dialog>
 
-                <v-btn small v-on:click="deleteUser(user.id)" color="error">Delete</v-btn>
+                <v-dialog max-width="500">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn small color="error" v-bind="attrs" v-on="on">
+                      <v-icon small class="mr-2">fas fa-trash-alt</v-icon>
+                      <span>Delete user</span>
+                    </v-btn>
+                  </template>
+                  <template v-slot:default="dialog">
+                    <v-card>
+                      <v-toolbar color="error" dark>Delete user</v-toolbar>
+                      <v-card-text>
+                        <div class="text-p pa-12">Are u sure you want to delete this user ?</div>
+                      </v-card-text>
+                      <v-card-actions class="justify-end">
+                        <v-btn text @click="dialog.value = false">Cancel</v-btn>
+                        <v-btn small v-on:click="deleteUser(user.id)" color="error">Yes</v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </template>
+                </v-dialog>
                 <v-btn small v-if="user.role == 'Employee'" v-on:click="promote(user.id)" class="ml-2" color="yellow">Promote</v-btn>
               </v-container>
             </tr>
@@ -117,6 +141,7 @@ export default {
       axios
         .get(this.path + '/all')
         .then((response) => {
+          console.log(response.data.data)
           this.users = response.data.data
         })
         .catch(err => console.log(err.message))

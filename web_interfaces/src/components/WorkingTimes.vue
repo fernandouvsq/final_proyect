@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-container>
-      <h2 class="text-center mb-4">Workingtimes</h2>
+      <h2 class="text-center mb-4">Statistiques</h2>
       <v-row justify="center" class="align-center">
         <v-card
           :elevation="6"
@@ -83,12 +83,7 @@
         </v-card>
 
         <!-- MODAL NEW WORKINGTIME -->
-        <v-dialog
-          v-model="createWorkingTimeDialog"
-          persistent
-          max-width="600px"
-          class="mr-4"
-        >
+        <v-dialog v-model="createWorkingTimeDialog" class="mr-4" persistent max-width="600px">
           <template v-slot:activator="{ on, attrs }">
             <v-btn color="primary" dark v-bind="attrs" v-on="on"
               >New Workingtime</v-btn
