@@ -2,6 +2,40 @@
 
 <template>
   <div>
+
+    <div class="d-flex justify-center mt-10">
+      <!-- MODAL NEW USER -->
+      <v-dialog v-model="createUserDialog" persistent max-width="600px">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn color="primary" dark v-bind="attrs" v-on="on">New user</v-btn>
+        </template>
+        <v-card>
+          <v-card-title justify="center">
+            <span class="text-h5">New user</span>
+          </v-card-title>
+          <v-card-text>
+            <v-container>
+              <v-form>
+                <v-container>
+                  <v-row justify="center" >
+                    <v-col cols="1" sm="5" md="5">
+                      <v-text-field v-model="newUsername" outlined dense required label="Username"></v-text-field>
+                      <v-text-field v-model="newEmail" outlined dense required label="Email"></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-form>
+            </v-container>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" text v-on:click="closeNewUserDialog()">Close</v-btn>
+            <v-btn color="primary" v-on:click="createUser()">Save</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </div>
+
     <v-row justify="center" class="mt-4">
       <v-simple-table>
           <thead>
@@ -81,37 +115,6 @@
         </tbody>
       </v-simple-table>
     </v-row>
-
-    <!-- MODAL NEW USER -->
-    <v-dialog v-model="createUserDialog" persistent max-width="600px">
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn color="primary" dark v-bind="attrs" v-on="on">New user</v-btn>
-      </template>
-      <v-card>
-        <v-card-title justify="center">
-          <span class="text-h5">New user</span>
-        </v-card-title>
-        <v-card-text>
-          <v-container>
-            <v-form>
-              <v-container>
-                <v-row justify="center" >
-                  <v-col cols="1" sm="5" md="5">
-                    <v-text-field v-model="newUsername" outlined required label="Username"></v-text-field>
-                    <v-text-field v-model="newEmail" outlined required label="Email"></v-text-field>
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-form>
-          </v-container>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text v-on:click="closeNewUserDialog()">Close</v-btn>
-          <v-btn color="primary" v-on:click="createUser()">Save</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
 
   </div>
 </template>

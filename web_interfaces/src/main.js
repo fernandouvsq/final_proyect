@@ -3,6 +3,10 @@ import App from './App.vue'
 import router from './router'
 import vuetify from './plugins/vuetify'
 import 'font-awesome/css/font-awesome.min.css'
+import Chartkick from 'vue-chartkick'
+import Chart from 'chart.js/auto'
+
+Vue.use(Chartkick.use(Chart))
 
 Vue.config.productionTip = false
 

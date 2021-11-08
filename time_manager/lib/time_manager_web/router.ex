@@ -50,6 +50,7 @@ defmodule TimeManagerWeb.Router do
     scope "/teams" do
       get "/all", TeamController, :index
       get "/:user_id", TeamController, :show
+      get "/:id/users", UserController, :show_users_of_team
       post "/", TeamController, :create
       put "/:user_id", TeamController, :update
       delete "/:user_id", TeamController, :delete

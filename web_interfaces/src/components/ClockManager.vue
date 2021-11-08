@@ -1,22 +1,15 @@
 <template>
   <div>
-    <v-form>
-      <v-container>
-        <v-row>
-          <v-col cols="3" sm="6" md="3">
-            <v-btn v-on:click="getClock(userID)" color="accent" elevation="2"
-              >get</v-btn
-            >
-            <v-btn
-              v-on:click="manageClock(userID, startDateTime, true)"
-              color="accent"
-              elevation="2"
-              >update</v-btn
-            >
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-form>
+    <v-switch v-model="switchMe" v-on:click="manageClock(userID, startDateTime, true)">
+      <template v-slot:label>
+        Turn on the progress: <v-progress-circular
+          :indeterminate="switchMe"
+          :value="0"
+          size="24"
+          class="ml-2"
+        ></v-progress-circular>
+      </template>
+    </v-switch>
   </div>
 </template>
 
@@ -28,14 +21,19 @@ import WorkingTimes from "./WorkingTimes.vue";
 //moment(this.clock.time, "“YYYY-MM-DD hh:mm:ss").fromNow();
 
 export default {
-  name: "Clock",
+
+  name: "Clockmanager",
   data() {
     return {
       path: "http://localhost:4000/api/clocks",
       startDateTime: this.getDate(),
-      userID: 6, // current_user in future
+      userID: 1, // current_user in future
       clock: null,
+      switchMe: false
     };
+  },
+  mounted() {
+    this.getClock(userId)
   },
   methods: {
     async getClock(UserID) {
@@ -43,6 +41,7 @@ export default {
         .get(this.path + "/" + UserID)
         .catch((error) => console.log(error));
       this.clock = response.data.data;
+      console.log(this.clock)
     },
     createClock(UserID, startTime, Status) {
       axios

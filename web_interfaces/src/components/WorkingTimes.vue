@@ -3,85 +3,6 @@
     <v-container>
       <h2 class="text-center mb-4">Statistiques</h2>
       <v-row justify="center" class="align-center">
-        <v-card
-          :elevation="6"
-          class="ma-4 pa-8"
-          v-for="workingtime in workingtimes"
-          :key="workingtime.id"
-        >
-          <p>Start : {{ format_date(workingtime.start) }}</p>
-          <p>End : {{ format_date(workingtime.end) }}</p>
-          <v-container justify="center" class="align-center">
-            <!-- UPDATE WORKINGTIME DIALOG -->
-            <v-dialog
-              v-model="editWorkingTimeDialog"
-              persistent
-              max-width="600px"
-            >
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  small
-                  class="mx-2"
-                  color="green"
-                  dark
-                  v-bind="attrs"
-                  v-on="on"
-                  >Edit</v-btn
-                >
-              </template>
-              <v-card>
-                <v-card-title justify="center">
-                  <span class="text-h5">Edit Workingtime</span>
-                </v-card-title>
-                <v-card-text>
-                  <v-container>
-                    <v-form>
-                      <v-container>
-                        <v-row justify="center">
-                          <v-col cols="1" sm="5" md="5">
-                            <input
-                              type="datetime-local"
-                              v-model="newDateStart"
-                              placeholder="Start"
-                            />
-                            <input
-                              type="datetime-local"
-                              v-model="newDateEnd"
-                              placeholder="End"
-                            />
-                          </v-col>
-                        </v-row>
-                      </v-container>
-                    </v-form>
-                  </v-container>
-                </v-card-text>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn
-                    color="blue darken-1"
-                    text
-                    v-on:click="closeEditWorkingTimeDialog()"
-                    >Close</v-btn
-                  >
-                  <v-btn
-                    color="green"
-                    dark
-                    v-on:click="updateWorkingTime(workingtime.id)"
-                    >Edit</v-btn
-                  >
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-
-            <v-btn
-              small
-              v-on:click="deleteWorkingTime(workingtime.id)"
-              color="error"
-              >Delete</v-btn
-            >
-          </v-container>
-        </v-card>
-
         <!-- MODAL NEW WORKINGTIME -->
         <v-dialog v-model="createWorkingTimeDialog" class="mr-4" persistent max-width="600px">
           <template v-slot:activator="{ on, attrs }">
@@ -138,6 +59,9 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
+
+        <column-chart :data="[['Mar', 32], ['Mon', 46], ['Tue', 28]]"></column-chart>
+        <pie-chart :data="[['Blueberry', 44], ['Strawberry', 23]]"></pie-chart>
       </v-row>
     </v-container>
   </div>
