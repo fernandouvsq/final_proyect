@@ -3,14 +3,12 @@ defmodule TimeManager.Management.Team do
   import Ecto.Changeset
 
   schema "teams" do
-    belongs_to :user, TimeManager.Management.User
+    many_to_many :users, TimeManager.Management.User, join_through: "users_teams"
 
     timestamps()
   end
 
   @doc false
   def changeset(team, attrs) do
-    team
-    |> cast(attrs, [:user_id])
   end
 end

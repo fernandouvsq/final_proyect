@@ -10,7 +10,7 @@ defmodule TimeManager.Management.User do
     field :role, Ecto.Enum, values: [Employee: 0, Manager: 1, General_Manager: 2]
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true
-    has_one :team, TimeManager.Management.Team
+    many_to_many :teams, TimeManager.Management.Team, join_through: "users_teams"
 
     timestamps()
   end
