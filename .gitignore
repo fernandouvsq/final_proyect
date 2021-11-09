@@ -1,2 +1,3 @@
 time_manager/config/dev.exs
 .env
+MyAppMobile
