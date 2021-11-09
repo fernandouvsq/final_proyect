@@ -95,7 +95,7 @@ defmodule TimeManager.Management do
   """
   def create_user(attrs \\ %{}) do
     %User{}
-    |> User.changeset(attrs)
+    |> User.changeset_signup(attrs)
     |> Repo.insert()
   end
 

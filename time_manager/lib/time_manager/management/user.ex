@@ -18,6 +18,12 @@ defmodule TimeManager.Management.User do
   @doc false
   def changeset(user, attrs) do
     user
+    |> cast(attrs, [:username, :email, :role])
+    |> validate_required([:username, :email, :role])
+  end
+
+  def changeset_signup(user, attrs) do
+    user
     |> cast(attrs, [:username, :email, :role, :password, :password_confirmation])
     |> validate_required([:username, :email, :password, :password_confirmation])
     |> validate_format(:email, ~r/@/)
