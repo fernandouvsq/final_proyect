@@ -9,6 +9,7 @@ defmodule TimeManager.Management do
 
   alias TimeManager.Repo
   alias TimeManager.Management.User
+  alias TimeManager.Management.UserTeam
   alias TimeManagerWeb.Guardian
 
   @doc """
@@ -380,6 +381,15 @@ defmodule TimeManager.Management do
   def list_teams_by_user(user_id) do
     query = from w in Team, where: w.user_id == ^user_id
     Repo.all(query)
+  end
+
+  def list_users_by_team(id) do
+    Repo.all(
+      from t in Team,
+      where: t.id == ^id,
+      join: ut in UserTeam, on: t.id == ut.team_id,
+      join: u in User, on: u.id == ut.user_id,
+      select: %{id: u.id, username: u.username, email: u.email, role: u.role})
   end
 
   @doc """
