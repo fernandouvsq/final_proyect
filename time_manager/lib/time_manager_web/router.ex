@@ -31,12 +31,13 @@ defmodule TimeManagerWeb.Router do
     scope "/users" do
       get "/all", UserController, :index
       get "/:userID", UserController, :show
-      post "/sign_up", UserController, :create
+      post "/", UserController, :create
       post "/sign_in", UserController, :sign_in
       put "/:userID", UserController, :update
       delete "/:userID", UserController, :delete
       options "/", UserController, :options
       options "/:userID", UserController, :options
+      options "/sign_in", UserController, :options
       put "/:userID/promote", UserController, :promote
       options "/:userID/promote", UserController, :options
     end
@@ -50,6 +51,7 @@ defmodule TimeManagerWeb.Router do
       options "/", WorkingtimeController, :options
       options "/:user_id", WorkingtimeController, :options
       options "/:user_id/:id", WorkingtimeController, :options
+      options "/:id", WorkingtimeController, :options
     end
 
     scope "/clocks" do
