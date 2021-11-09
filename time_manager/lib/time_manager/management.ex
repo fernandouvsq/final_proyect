@@ -380,7 +380,13 @@ defmodule TimeManager.Management do
 
   def list_teams_by_user(user_id) do
     query = from w in Team, where: w.user_id == ^user_id
-    Repo.all(query)
+    Repo.all(
+      from u in User,
+      where: u.id == ^user_id,
+      join: ut in UserTeam, on: u.id == ut.user_id,
+      join: t in Team, on: t.id == ut.team_id,
+      select: %{id: t.id}
+    )
   end
 
   def list_users_by_team(id) do
@@ -389,7 +395,8 @@ defmodule TimeManager.Management do
       where: t.id == ^id,
       join: ut in UserTeam, on: t.id == ut.team_id,
       join: u in User, on: u.id == ut.user_id,
-      select: %{id: u.id, username: u.username, email: u.email, role: u.role})
+      select: %{id: u.id, username: u.username, email: u.email, role: u.role}
+    )
   end
 
   @doc """

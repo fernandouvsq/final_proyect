@@ -13,7 +13,6 @@ defmodule TimeManagerWeb.TeamView do
   def render("team.json", %{team: team}) do
     %{
       id: team.id,
-      user_id: team.user_id
     }
   end
 end
