@@ -18,7 +18,7 @@
                 v-bind="attrs"
                 v-on="on"
                 @click="getWorkingTimes()"
-                >New Workingtime
+                >New  Workingtime
               </v-btn>
             </template>
 
